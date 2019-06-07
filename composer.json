@@ -24,12 +24,6 @@
         }
     },
     "scripts": {
-        "post-install-cmd": [
-            "ls"
-        ],
-        "post-update-cmd": [
-            "ls"
-        ]
     },
     "require": {
         "processmaker/nayra": "dev-master"
