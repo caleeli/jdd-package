@@ -1,0 +1,37 @@
+{
+    "name": "coredump/jdd-package",
+    "description": "Example of jdd package",
+    "type": "library",
+    "license": "LGPL-3.0-or-later",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+      "autoload": {
+        "psr-4": {
+            "JDD\\Example\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "David Callizaya",
+            "email": "davidcallizaya@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "JDD\\Example\\PackageServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "ls"
+        ],
+        "post-update-cmd": [
+            "ls"
+        ]
+    },
+    "require": {
+        "processmaker/nayra": "dev-master"
+    }
+}
