@@ -1,5 +1,5 @@
 {
-    "name": "coredump/jdd-package",
+    "name": "coredump/package",
     "description": "Example of jdd package",
     "type": "library",
     "license": "LGPL-3.0-or-later",

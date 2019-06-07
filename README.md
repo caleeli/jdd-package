@@ -1,5 +1,6 @@
 # coredump/jdd-package
 
-## Package setup
+## Create a new package
 ```
+composer create-project --prefer-dist --stability dev coredump/package facturacion
 ```
