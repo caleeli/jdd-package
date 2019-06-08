@@ -3,7 +3,6 @@
 namespace JDD\Example\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\File;
 use JDD\Example\PackageServiceProvider;
 
 class UpdatePackage extends Command
@@ -33,9 +32,9 @@ class UpdatePackage extends Command
         $this->info('Build asset: ' . $this->signature);
         $dir = getcwd();
         chdir(__DIR__ . '/../../../');
+        file_exists('node_modules') ?: exec('npm install');
         exec('npm run build');
         chdir($dir);
-        //File::deleteDirectory(public_path('/modules/' . PackageServiceProvider::PluginName));
         $this->call('vendor:publish', ['--provider' => PackageServiceProvider::class, '--force' => true]);
     }
 }
