@@ -25,8 +25,8 @@
 use JDD\Example\Models\Test;
 
 Test::create([
-  'data' => $this->data->form,
-  'status' => $this->data->status,
+  'data' => $model->data->form,
+  'status' => $model->data->status,
 ]);]]></script>
     </scriptTask>
     <sequenceFlow id="_6" sourceRef="_3" targetRef="_5"/>
