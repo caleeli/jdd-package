@@ -25,6 +25,9 @@
         "icon": "fas fa-box-open"
     },
     "scripts": {
+        "post-create-project-cmd": [
+            "@php rename-package.php"
+        ]
     },
     "require": {
     }

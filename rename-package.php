@@ -1,10 +1,25 @@
 <?php
 // MAIN
 $rename = new RenamePackage();
-if ($argc < 2 || empty($argv[1])) {
-    die("ERROR: Expected\n" . '       php rename-package.php vendor/package');
+$name = inputParam(1, 'Package name: ');
+$description = inputParam(2, 'Description: ');
+$icon = inputParam(3, 'Icon: ');
+
+$rename->handle($name, $description, $icon);
+
+function inputParam($index, $label)
+{
+    global $argv;
+    if (empty($argv[$index])) {
+        do {
+            echo $label;
+            $name = rtrim(fgets(STDIN, 1024));
+        } while (!$name);
+        return $name;
+    } else {
+        return rtrim($argv[$index]);
+    }
 }
-$rename->handle($argv[1], @$argv[2], @$argv[3]);
 
 // CLASS
 class RenamePackage
