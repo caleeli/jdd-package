@@ -26,7 +26,7 @@
     },
     "scripts": {
         "post-create-project-cmd": [
-            "@php rename-package.php"
+            "php rename-package.php"
         ]
     },
     "require": {
