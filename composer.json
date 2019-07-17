@@ -21,7 +21,8 @@
             "providers": [
                 "JDD\\Example\\PackageServiceProvider"
             ]
-        }
+        },
+        "icon": "fas fa-box-open"
     },
     "scripts": {
     },

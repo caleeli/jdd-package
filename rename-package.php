@@ -1,10 +1,10 @@
 <?php
 // MAIN
 $rename = new RenamePackage();
-if ($argc !== 2 || empty($argv[1])) {
+if ($argc < 2 || empty($argv[1])) {
     die("ERROR: Expected\n" . '       php rename-package.php vendor/package');
 }
-$rename->handle($argv[1]);
+$rename->handle($argv[1], @$argv[2], @$argv[3]);
 
 // CLASS
 class RenamePackage
@@ -14,7 +14,7 @@ class RenamePackage
      *
      * @return mixed
      */
-    public function handle($name)
+    public function handle($name, $description, $icon)
     {
         list($vendor, $package) = explode('/', $name);
         $vendor = $this->camel($vendor);
@@ -23,8 +23,21 @@ class RenamePackage
         $this->replace(__DIR__, 'JDD' . '\Example', $namespace);
         $this->replaceFile(__DIR__ . '/src/Console/Commands/UpdatePackage.php', 'example:jdd-update', str_replace('/', '-', $name) . ':jdd-update');
         $this->replaceFile(__DIR__ . '/src/PackageServiceProvider.php', 'jdd/example', $name);
+        $this->replaceFile(__DIR__ . '/composer.json', 'JDD\\\\Example', "$vendor\\\\$package");
+        $composer = json_decode(file_get_contents(__DIR__ . '/composer.json'));
+        $composer->name = $name;
+        !$description ?: $composer->description = $description;
+        !$icon ?: $composer->extra->icon = $icon;
+        file_put_contents(__DIR__ . '/composer.json', json_encode($composer, JSON_PRETTY_PRINT));
     }
 
+    /**
+     * Camelize $text
+     *
+     * @param string $text
+     *
+     * @return string
+     */
     private function camel($text)
     {
         return preg_replace('/\W+/', '', preg_replace_callback('/\w+/', function ($m) {return ucfirst($m[0]);}, $text));
