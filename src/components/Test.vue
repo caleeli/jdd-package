@@ -6,16 +6,21 @@
         class="btn btn-primary block full-width m-b"
         @click="callProcess('test.bpmn')"
       >Start Test Process</button>
+      <br><br>
       <grid v-model="records">
         <template slot="header">
-          <th>id</th>
-          <th>data</th>
-          <th>status</th>
+          <row :widths="[30,200,80]" class="grid-header text-uppercase font-weight-bold">
+            <p slot="c1">id</p>
+            <p slot="c2">data</p>
+            <p slot="c3">status</p>
+          </row>
         </template>
         <template v-slot="{row}">
-          <td>{{row.id}}</td>
-          <td>{{row.attributes.data}}</td>
-          <td>{{row.attributes.status}}</td>
+          <row :widths="[30,200,80]" class="border-bottom">
+            <p slot="c1">{{row.id}}</p>
+            <p slot="c2">{{row.attributes.data}}</p>
+            <p slot="c3">{{row.attributes.status}}</p>
+          </row>
         </template>
       </grid>
     </div>
@@ -28,7 +33,7 @@ export default {
   mixins: [window.workflowMixin],
   data() {
     return {
-      records: this.axiosList("test"),
+      records: this.axiosList("test")
     };
   },
   methods: {
