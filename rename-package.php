@@ -39,6 +39,7 @@ class RenamePackage
         $this->replaceFile(__DIR__ . '/src/Console/Commands/UpdatePackage.php', 'example:jdd-update', str_replace('/', '-', $name) . ':jdd-update');
         $this->replaceFile(__DIR__ . '/src/PackageServiceProvider.php', 'jdd/example', $name);
         $this->replaceFile(__DIR__ . '/composer.json', 'JDD\\\\Example', "$vendor\\\\$package");
+        $this->replaceFile(__DIR__ . '/vue.config.js', 'jdd/example', $name);
         $composer = json_decode(file_get_contents(__DIR__ . '/composer.json'));
         $composer->name = $name;
         !$description ?: $composer->description = $description;

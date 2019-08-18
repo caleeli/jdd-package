@@ -1,4 +1,4 @@
 
 module.exports = {
-  publicPath: '/modules/jdd/workflow/',
+  publicPath: '/modules/jdd/example/',
 };
