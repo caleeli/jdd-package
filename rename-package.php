@@ -1,11 +1,12 @@
 <?php
 // MAIN
 $rename = new RenamePackage();
-$name = inputParam(1, 'Package name: ');
-$description = inputParam(2, 'Description: ');
-$icon = inputParam(3, 'Icon: ');
+$vendor = inputParam(1, 'Vendor name: ');
+$name = inputParam(2, 'Package name: ');
+$description = inputParam(3, 'Description: ');
+$icon = inputParam(4, 'Icon: ');
 
-$rename->handle($name, $description, $icon);
+$rename->handle("{$vendor}/{$name}", $description, $icon);
 
 function inputParam($index, $label)
 {
@@ -17,7 +18,11 @@ function inputParam($index, $label)
         } while (!$name);
         return $name;
     } else {
-        return rtrim($argv[$index]);
+        $value = rtrim($argv[$index]);
+        if ($value === '__NAME__') {
+            $value = basename(__DIR__);
+        }
+        return $value;
     }
 }
 
@@ -40,8 +45,10 @@ class RenamePackage
         $this->replaceFile(__DIR__ . '/src/PackageServiceProvider.php', 'jdd/example', $name);
         $this->replaceFile(__DIR__ . '/composer.json', 'JDD\\\\Example', "$vendor\\\\$package");
         $this->replaceFile(__DIR__ . '/vue.config.js', 'jdd/example', $name);
+        $this->replaceFile(__DIR__ . '/package.json', 'jdd-example', $name);
         $composer = json_decode(file_get_contents(__DIR__ . '/composer.json'));
         $composer->name = $name;
+        $composer->version = '0.1.0';
         !$description ?: $composer->description = $description;
         !$icon ?: $composer->extra->icon = $icon;
         file_put_contents(__DIR__ . '/composer.json', json_encode($composer, JSON_PRETTY_PRINT));
@@ -56,7 +63,9 @@ class RenamePackage
      */
     private function camel($text)
     {
-        return preg_replace('/\W+/', '', preg_replace_callback('/\w+/', function ($m) {return ucfirst($m[0]);}, $text));
+        return preg_replace('/\W+/', '', preg_replace_callback('/\w+/', function ($m) {
+            return ucfirst($m[0]);
+        }, $text));
     }
 
     /**
